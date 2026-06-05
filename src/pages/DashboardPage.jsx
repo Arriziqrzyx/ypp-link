@@ -10,7 +10,13 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [toast, setToast] = useState(null);
   const PAGE_SIZE = 10;
+
+  const showToast = (message) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Form states
   const [targetUrl, setTargetUrl] = useState('');
@@ -104,6 +110,7 @@ export default function DashboardPage() {
       setTargetUrl('');
       setAlias('');
       fetchLinks();
+      showToast('Tautan berhasil disulap! ✨');
     }
     setIsSubmitting(false);
   };
@@ -118,6 +125,8 @@ export default function DashboardPage() {
       
     if (!error) {
       setLinks(links.filter(l => l.id !== id));
+      setTotalCount(prev => Math.max(0, prev - 1));
+      showToast('Tautan berhasil dihapus! 🗑️');
     }
   };
 
@@ -137,7 +146,7 @@ export default function DashboardPage() {
       .maybeSingle();
 
     if (existing) {
-      alert('Alias sudah digunakan oleh link lain.');
+      setFormError('Alias sudah digunakan oleh link lain.');
       return;
     }
 
@@ -149,13 +158,14 @@ export default function DashboardPage() {
     if (!error) {
       setEditingId(null);
       fetchLinks();
+      showToast('Tautan berhasil diperbarui! ✏️');
     }
   };
 
   const copyToClipboard = (slug) => {
     const url = `https://url.yuritechpp.co.id/${slug}`;
     navigator.clipboard.writeText(url);
-    alert('Link disalin: ' + url);
+    showToast('Tautan disalin ke clipboard! 📋');
   };
 
   // Note: For accurate total clicks across all pages, we should use a separate aggregation query or RPC.
@@ -443,6 +453,13 @@ export default function DashboardPage() {
           )}
         </div>
         </div>
+
+        {/* Toast Notification */}
+        {toast && (
+          <div className="fixed bottom-5 right-5 bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 z-50 animate-bounce">
+            <span className="text-sm font-semibold">{toast}</span>
+          </div>
+        )}
       </main>
     </div>
   );
