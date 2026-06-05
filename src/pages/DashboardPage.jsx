@@ -175,14 +175,14 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <LinkIcon className="h-6 w-6 text-blue-600 mr-2" />
-              <span className="text-xl font-bold text-gray-900">Yuritech URL</span>
+              <img src="/src/assets/logo.png" alt="YPP Logo" className="h-8 w-auto mr-3" onError={(e) => e.target.style.display='none'} />
+              <span className="text-2xl font-black text-sky-500 tracking-tight">YPP LINK</span>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">{user?.email}</span>
               <button
                 onClick={signOut}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-4 py-2 border border-slate-200 text-sm font-semibold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all shadow-sm"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Keluar
@@ -192,34 +192,39 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+        {/* Background blobs for dashboard */}
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-sky-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0 pointer-events-none"></div>
+
+        <div className="relative z-10">
         {/* Stats */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 mb-8">
-          <div className="bg-white overflow-hidden shadow rounded-lg border border-gray-100">
-            <div className="p-5">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mb-8">
+          <div className="glass-card overflow-hidden rounded-2xl border border-white/60 hover:shadow-lg transition-shadow">
+            <div className="p-6">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <LinkIcon className="h-6 w-6 text-gray-400" />
+                <div className="flex-shrink-0 bg-sky-100 p-3 rounded-xl text-sky-500">
+                  <LinkIcon className="h-7 w-7" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Total Link Aktif</dt>
-                    <dd className="text-2xl font-semibold text-gray-900">{totalLinks}</dd>
+                    <dt className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Koleksi Tautan</dt>
+                    <dd className="text-3xl font-black text-slate-800">{totalLinks}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-white overflow-hidden shadow rounded-lg border border-gray-100">
-            <div className="p-5">
+          <div className="glass-card overflow-hidden rounded-2xl border border-white/60 hover:shadow-lg transition-shadow">
+            <div className="p-6">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <BarChart3 className="h-6 w-6 text-gray-400" />
+                <div className="flex-shrink-0 bg-red-100 p-3 rounded-xl text-red-500">
+                  <BarChart3 className="h-7 w-7" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Total Klik (Halaman Ini)</dt>
-                    <dd className="text-2xl font-semibold text-gray-900">{totalClicksPage}</dd>
+                    <dt className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Jejak Klik (Halaman Ini)</dt>
+                    <dd className="text-3xl font-black text-slate-800">{totalClicksPage}</dd>
                   </dl>
                 </div>
               </div>
@@ -228,38 +233,43 @@ export default function DashboardPage() {
         </div>
 
         {/* Create Form */}
-        <div className="bg-white shadow rounded-lg mb-8 border border-gray-100">
-          <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Buat Link Baru</h3>
+        <div className="glass-card rounded-3xl mb-10 border border-white/60 shadow-xl shadow-sky-900/5">
+          <div className="px-6 py-8 sm:p-8">
+            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+              <span className="bg-sky-500 text-white p-2 rounded-lg mr-3 shadow-md shadow-sky-500/20">
+                <Plus className="h-5 w-5" />
+              </span>
+              Bikin Tautan Baru
+            </h3>
             {formError && (
-              <div className="mb-4 bg-red-50 border-l-4 border-red-400 p-4 text-sm text-red-700">
+              <div className="mb-6 bg-red-50/80 backdrop-blur-sm border-l-4 border-red-500 p-4 rounded-r-md text-sm text-red-700 font-medium">
                 {formError}
               </div>
             )}
-            <form onSubmit={handleCreate} className="space-y-4 sm:flex sm:space-x-4 sm:space-y-0 items-end">
+            <form onSubmit={handleCreate} className="space-y-5 lg:flex lg:space-x-5 lg:space-y-0 items-end">
               <div className="flex-1">
-                <label htmlFor="targetUrl" className="block text-sm font-medium text-gray-700">Target URL</label>
+                <label htmlFor="targetUrl" className="block text-sm font-semibold text-slate-700 mb-1">Tautan Panjangmu</label>
                 <input
                   type="url"
                   id="targetUrl"
                   required
-                  placeholder="https://example.com/very-long-url..."
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="https://example.com/dokumen-sangat-penting-sekali..."
+                  className="block w-full border border-slate-200 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent sm:text-sm bg-white/60 focus:bg-white transition-colors"
                   value={targetUrl}
                   onChange={(e) => setTargetUrl(e.target.value)}
                 />
               </div>
-              <div className="sm:w-64">
-                <label htmlFor="alias" className="block text-sm font-medium text-gray-700">Alias (Opsional)</label>
-                <div className="mt-1 flex rounded-md shadow-sm">
-                  <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+              <div className="lg:w-80">
+                <label htmlFor="alias" className="block text-sm font-semibold text-slate-700 mb-1">Tautan Pendekmu (Opsional)</label>
+                <div className="flex rounded-xl shadow-sm overflow-hidden border border-slate-200 bg-white/60 focus-within:bg-white focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent transition-all">
+                  <span className="inline-flex items-center px-4 bg-slate-50 text-slate-500 sm:text-sm font-medium border-r border-slate-200">
                     url.yuritechpp.co.id/
                   </span>
                   <input
                     type="text"
                     id="alias"
-                    placeholder="custom-alias"
-                    className="flex-1 block w-full border border-gray-300 rounded-none rounded-r-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="nama-keren"
+                    className="flex-1 block w-full py-3 px-4 focus:outline-none sm:text-sm bg-transparent"
                     value={alias}
                     onChange={(e) => setAlias(e.target.value)}
                   />
@@ -268,31 +278,30 @@ export default function DashboardPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                className="w-full lg:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-bold rounded-xl shadow-lg shadow-sky-500/30 text-white bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 transition-all"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                {isSubmitting ? 'Menyimpan...' : 'Buat Link'}
+                {isSubmitting ? 'Menyulap...' : 'Sulap Tautan!'}
               </button>
             </form>
           </div>
         </div>
 
         {/* Links Table */}
-        <div className="bg-white shadow rounded-lg border border-gray-100 overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Daftar Link</h3>
-            <div className="relative rounded-md shadow-sm">
+        <div className="glass-card rounded-3xl border border-white/60 overflow-hidden shadow-xl shadow-slate-200/50">
+          <div className="px-6 py-6 sm:px-8 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 bg-white/40">
+            <h3 className="text-xl font-bold text-slate-800 mb-4 sm:mb-0">Daftar Tautanmu</h3>
+            <div className="relative w-full sm:w-72">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-4 w-4 text-gray-400" />
+                <Search className="h-4 w-4 text-slate-400" />
               </div>
               <input
                 type="text"
-                className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 border"
-                placeholder="Cari di halaman ini..."
+                className="block w-full pl-10 pr-3 py-2 border border-slate-200 rounded-xl leading-5 bg-white/60 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500 focus:border-transparent sm:text-sm transition-colors"
+                placeholder="Cari tautan..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setPage(0); // Reset page on search
+                  setPage(0);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') fetchLinks();
@@ -302,17 +311,17 @@ export default function DashboardPage() {
           </div>
           
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-slate-100">
+              <thead className="bg-slate-50/50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alias</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target URL</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klik</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Tautan Pendek</th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Tujuan</th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Klik</th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Dibuat</th>
+                  <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white/40 divide-y divide-slate-100 backdrop-blur-sm">
                 {loading ? (
                   <tr>
                     <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">Memuat data...</td>
@@ -323,58 +332,58 @@ export default function DashboardPage() {
                   </tr>
                 ) : (
                   filteredLinks.map((link) => (
-                    <tr key={link.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <tr key={link.id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="px-6 py-5 whitespace-nowrap text-sm font-medium text-slate-900">
                         {editingId === link.id ? (
                           <input 
-                            className="border border-gray-300 rounded px-2 py-1 text-sm w-32"
+                            className="border border-sky-300 rounded-lg px-3 py-1.5 text-sm w-40 focus:ring-2 focus:ring-sky-500 focus:outline-none"
                             value={editAlias}
                             onChange={(e) => setEditAlias(e.target.value)}
                           />
                         ) : (
-                          <div className="flex items-center space-x-2">
-                            <a href={`https://url.yuritechpp.co.id/${link.slug}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                              url.yuritechpp.co.id/{link.slug}
+                          <div className="flex items-center space-x-2 bg-sky-50 text-sky-700 px-3 py-1.5 rounded-lg border border-sky-100 inline-flex">
+                            <a href={`https://url.yuritechpp.co.id/${link.slug}`} target="_blank" rel="noopener noreferrer" className="hover:underline font-semibold">
+                              yuritechpp.co.id/{link.slug}
                             </a>
-                            <button onClick={() => copyToClipboard(link.slug)} className="text-gray-400 hover:text-blue-600" title="Salin URL">
+                            <button onClick={() => copyToClipboard(link.slug)} className="text-sky-500 hover:text-sky-700 transition-colors" title="Salin URL">
                               <Copy className="h-4 w-4" />
                             </button>
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
+                      <td className="px-6 py-5 text-sm text-slate-500 max-w-xs truncate">
                         {editingId === link.id ? (
                           <input 
-                            className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                            className="border border-sky-300 rounded-lg px-3 py-1.5 text-sm w-full focus:ring-2 focus:ring-sky-500 focus:outline-none"
                             value={editTargetUrl}
                             onChange={(e) => setEditTargetUrl(e.target.value)}
                           />
                         ) : (
-                          <a href={link.target_url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 hover:underline">
+                          <a href={link.target_url} target="_blank" rel="noopener noreferrer" className="hover:text-sky-600 hover:underline">
                             {link.target_url}
                           </a>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <td className="px-6 py-5 whitespace-nowrap text-sm text-slate-500">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
                           {link.click_count || 0}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(link.created_at).toLocaleDateString('id-ID')}
+                      <td className="px-6 py-5 whitespace-nowrap text-sm text-slate-500 font-medium">
+                        {new Date(link.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
                         {editingId === link.id ? (
-                          <div className="flex justify-end space-x-2">
-                            <button onClick={() => handleUpdate(link.id)} className="text-green-600 hover:text-green-900">Simpan</button>
-                            <button onClick={() => setEditingId(null)} className="text-gray-600 hover:text-gray-900">Batal</button>
+                          <div className="flex justify-end space-x-3">
+                            <button onClick={() => handleUpdate(link.id)} className="text-green-600 hover:text-green-700 bg-green-50 px-3 py-1 rounded-md">Simpan</button>
+                            <button onClick={() => setEditingId(null)} className="text-slate-600 hover:text-slate-800 bg-slate-100 px-3 py-1 rounded-md">Batal</button>
                           </div>
                         ) : (
                           <div className="flex justify-end space-x-3">
-                            <button onClick={() => startEdit(link)} className="text-blue-600 hover:text-blue-900" title="Edit">
+                            <button onClick={() => startEdit(link)} className="text-sky-500 hover:text-sky-700 p-1.5 hover:bg-sky-50 rounded-lg transition-colors" title="Edit">
                               <Edit2 className="h-4 w-4" />
                             </button>
-                            <button onClick={() => handleDelete(link.id)} className="text-red-600 hover:text-red-900" title="Hapus">
+                            <button onClick={() => handleDelete(link.id)} className="text-red-400 hover:text-red-600 p-1.5 hover:bg-red-50 rounded-lg transition-colors" title="Hapus">
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </div>
@@ -388,50 +397,51 @@ export default function DashboardPage() {
           </div>
           {/* Pagination Controls */}
           {totalCount > PAGE_SIZE && (
-            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div className="bg-slate-50/80 px-6 py-4 flex items-center justify-between border-t border-slate-100">
               <div className="flex-1 flex justify-between sm:hidden">
                 <button
                   onClick={() => setPage(p => Math.max(0, p - 1))}
                   disabled={page === 0}
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-4 py-2 border border-slate-200 text-sm font-semibold rounded-xl text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50"
                 >
-                  Previous
+                  Mundur
                 </button>
                 <button
                   onClick={() => setPage(p => p + 1)}
                   disabled={(page + 1) * PAGE_SIZE >= totalCount}
-                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-slate-200 text-sm font-semibold rounded-xl text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50"
                 >
-                  Next
+                  Maju
                 </button>
               </div>
               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm text-gray-700">
-                    Menampilkan <span className="font-medium">{page * PAGE_SIZE + 1}</span> hingga <span className="font-medium">{Math.min((page + 1) * PAGE_SIZE, totalCount)}</span> dari <span className="font-medium">{totalCount}</span> hasil
+                  <p className="text-sm text-slate-600">
+                    Nampilin <span className="font-bold text-slate-800">{page * PAGE_SIZE + 1}</span> sampai <span className="font-bold text-slate-800">{Math.min((page + 1) * PAGE_SIZE, totalCount)}</span> dari <span className="font-bold text-slate-800">{totalCount}</span> tautan
                   </p>
                 </div>
                 <div>
-                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  <nav className="relative z-0 inline-flex rounded-xl shadow-sm -space-x-px overflow-hidden" aria-label="Pagination">
                     <button
                       onClick={() => setPage(p => Math.max(0, p - 1))}
                       disabled={page === 0}
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                      className="relative inline-flex items-center px-3 py-2 border border-slate-200 bg-white text-sm font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-50 transition-colors"
                     >
-                      <span>Sebelumnya</span>
+                      <span>Mundur</span>
                     </button>
                     <button
                       onClick={() => setPage(p => p + 1)}
                       disabled={(page + 1) * PAGE_SIZE >= totalCount}
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                      className="relative inline-flex items-center px-3 py-2 border border-slate-200 bg-white text-sm font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-50 transition-colors"
                     >
-                      <span>Selanjutnya</span>
+                      <span>Maju</span>
                     </button>
                   </nav>
                 </div>
               </div>
             </div>
           )}
+        </div>
         </div>
       </main>
     </div>

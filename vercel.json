@@ -18,6 +18,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/404",
+      "destination": "/index.html"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/$1"
     },

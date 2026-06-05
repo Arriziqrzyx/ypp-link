@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   // Hindari memproses rute internal SPA
   const reservedPaths = ['login', 'register', 'dashboard', 'api'];
   if (reservedPaths.includes(slug.toLowerCase())) {
-    return res.status(404).send('Not Found');
+    return res.redirect(302, '/404');
   }
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -48,9 +48,7 @@ export default async function handler(req, res) {
       .single();
 
     if (error || !link) {
-      console.log(`Slug not found: ${slug}`);
-      // Jika slug tidak ditemukan, redirect ke halaman 404 aplikasi (atau halaman utama)
-      return res.redirect(302, '/');
+      return res.redirect(302, '/404');
     }
 
     // 2. Tambah click count
