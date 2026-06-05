@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowRight, LogIn } from 'lucide-react';
 
@@ -9,7 +9,6 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { signIn } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,7 +16,10 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    const { error } = await signIn({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     
     if (error) {
       setError(error.message);
