@@ -39,7 +39,7 @@ export default function LoginPage() {
         <div className="flex justify-center">
           <img
             className="h-16 w-auto"
-            src="/src/assets/logo.png"
+            src="/logo.png"
             alt="YPP Logo"
             onError={(e) => { e.target.style.display = 'none'; }}
           />

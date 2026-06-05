@@ -185,7 +185,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <img src="/src/assets/logo.png" alt="YPP Logo" className="h-8 w-auto mr-3" onError={(e) => e.target.style.display='none'} />
+              <img src="/logo.png" alt="YPP Logo" className="h-8 w-auto mr-3" onError={(e) => e.target.style.display='none'} />
               <span className="text-2xl font-black text-sky-500 tracking-tight">YPP LINK</span>
             </div>
             <div className="flex items-center space-x-4">
