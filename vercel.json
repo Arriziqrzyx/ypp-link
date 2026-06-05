@@ -1,0 +1,29 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/([a-zA-Z0-9_-]+)",
+      "destination": "/api/redirect?slug=$1"
+    }
+  ]
+}
